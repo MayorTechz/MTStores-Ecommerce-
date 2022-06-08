@@ -1,0 +1,303 @@
+ .baseColor{
+
+background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(37,145,251,0.98) 0.1%, rgba(0,7,128,1) 99.8% );
+ }
+ 
+ 
+ 
+ .white{
+     color:white;
+     font-weight:bold;
+     
+     
+ }
+ 
+ .menus{
+     font-weight:bold;
+     color:rgba(150,93,233,1);
+ }
+ 
+ .menuBackground{
+    
+     background-color: #8EC5FC;
+background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 24%, #ffffff 49%, #ffffff 75%, #ffffff 100%);
+
+ }
+ .currency{
+     font-weight:bold;
+ }
+ .rating{
+     color:#FFBF00;
+     font-size:10px;
+ }
+ .centerPix{
+     display:flex;
+     justify-content:center;
+     
+ }
+.price{
+    font-weight:bold;
+    text-align:center;
+    font-size:12px;
+}
+#old_price,.old_price{
+    color:red;
+    font-size:10px;
+  text-decoration:line-through;
+}
+#cartbtn{
+    float:right;
+    border-radius:70px 20px 10px 30px;
+}
+#cartbtn:hover{
+    color:white;
+    opacity:0.5;
+}
+#cartbtn:focus{
+    outline:none;
+}
+.button:focus{
+    outline:none;
+    opacity:0.5;
+}
+.mysection{
+    margin:auto;
+}
+
+#productName{
+    border-radius:20px 40px 20px 10px;
+}
+.products{
+    display:flex;
+    flex-flow:row wrap;
+}
+.bg{
+   background-color:#F0F8FF;
+}
+
+ .disclaimer {
+     display:none;
+   
+ }
+#loader{
+   
+  position: fixed;
+ top:35%;
+ left:40%;
+  width: 80px;
+  height: 80px;
+  z-index: 9999;
+  text-align:centerr;
+ 
+}
+.bold{
+    font-weight:bold;
+}
+ td{
+     font-size:13px;
+ }
+ button:focus {
+     outline:none;
+ }
+ .online-badge{
+     border-radius:50%; 
+     font-size:3px; 
+     position: absolute; 
+     left:165px; 
+     
+ }
+ .page{
+     display:flex;
+     justify-content:center;
+     margin:auto;
+     
+     border-radius:50%;
+ }
+ 
+#d,#h,#m,#s{
+    
+ font-size:18;
+ 
+ font-weight:bold;
+ 
+    
+}
+html,body{
+    
+  scroll-behavior: smooth;
+}
+
+a:focus{
+    outline: none;
+    opacity:1;
+}
+
+
+.button:hover,.fa:hover{
+    color:white;
+    outline:none;
+    opacity: 1;
+}
+
+
+#preloader{
+    position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  height: 100%;
+  background-color: #0f3ac3;
+  background-image: linear-gradient(135deg, #0f3ac3 0%, #1d24a0 100%);
+
+}
+
+#loader {
+  width: 13vmax;
+  height: 13vmax;
+  border-right: 4px solid #ffffff;
+  border-radius: 100%;
+  -webkit-animation: spinRight 1000ms linear infinite;
+          animation: spinRight 1000ms linear infinite;
+}
+#loader:before, #loader:after {
+  content: "";
+  width: 6vmax;
+  height: 6vmax;
+  display: block;
+  position: absolute;
+  top: calc(50% - 3vmax);
+  left: calc(50% - 3vmax);
+  border-left: 3px solid #ffffff;
+  border-radius: 100%;
+  -webkit-animation: spinLeft 800ms linear infinite;
+          animation: spinLeft 800ms linear infinite;
+}
+#loader:after {
+  width: 4vmax;
+  height: 4vmax;
+  top: calc(50% - 2vmax);
+  left: calc(50% - 2vmax);
+  border: 0;
+  border-right: 2px solid #ffffff;
+  -webkit-animation: none;
+          animation: none;
+}
+
+@-webkit-keyframes spinLeft {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes spinLeft {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(720deg);
+  }
+}
+@-webkit-keyframes spinRight {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes spinRight {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+ 
+ 
+ 
+#preloader2{
+    position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  height: 100%;
+  background-color:blue;
+  background-color: #0f3ac3;
+  background-image: linear-gradient(135deg, #141e30 16%, #243b55 100%);
+
+}
+
+#loader2 {
+  width: 13vmax;
+  height: 13vmax;
+  border-right: 4px solid #ffffff;
+  border-radius: 100%;
+  -webkit-animation: spinRight 1000ms linear infinite;
+          animation: spinRight 1000ms linear infinite;
+}
+#loader2:before, #loader2:after {
+  content: "";
+  width: 6vmax;
+  height: 6vmax;
+  display: block;
+  position: absolute;
+  top: calc(50% - 3vmax);
+  left: calc(50% - 3vmax);
+  border-left: 3px solid #ffffff;
+  border-radius: 100%;
+  -webkit-animation: spinLeft 800ms linear infinite;
+          animation: spinLeft 800ms linear infinite;
+}
+#loader2:after {
+  width: 4vmax;
+  height: 4vmax;
+  top: calc(50% - 2vmax);
+  left: calc(50% - 2vmax);
+  border: 0;
+  border-right: 2px solid #ffffff;
+  -webkit-animation: none;
+          animation: none;
+}
+
+@-webkit-keyframes spinLeft {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(720deg);
+  }
+}
+
+@keyframes spinLeft {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(720deg);
+  }
+}
+@-webkit-keyframes spinRight {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes spinRight {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+ 
