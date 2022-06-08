@@ -19,7 +19,7 @@ Demo at https://mtstorez.000webhostapp.com
 User  Login credentials :
 
 <b>email: user@mtstores.com</b>
-<b>password: user</b>
+<b>password: useruser</b>
 
 Admin  Login Credentials:
 
