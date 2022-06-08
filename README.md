@@ -14,7 +14,7 @@ Features includes:
 
 To install follow the readme.txt
 
-Demo at https://mtstores.000webhostapp.com
+Demo at https://mtstorez.000webhostapp.com
 
 User  Login credentials :
 
