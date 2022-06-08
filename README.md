@@ -31,3 +31,4 @@ Staff Login Credentials:
 email: <b>staff@mtstores.com</b><br>
 pass: <b>staff</b>
 
+NB: Some of the admin functions have been disabled in the demo!!!
