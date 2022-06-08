@@ -18,16 +18,16 @@ Demo at https://mtstorez.000webhostapp.com
 
 User  Login credentials :
 
-<b>email: user@mtstores.com</b>
-<b>password: useruser</b>
+email: <b>user@mtstores.com</b>
+password: <b>useruser</b>
 
 Admin  Login Credentials:
 
-<b>email: admin@mtstores.com</b>
-<b>password: admin</b>
+email: <b>admin@mtstores.com</b><br>
+password: <b>admin</b>
 
 Staff Login Credentials:
 
-<b>email: staff@mtstores.com</b><br>
-<b>pass: staff</b>
+email: <b>staff@mtstores.com</b><br>
+pass: <b>staff</b>
 
