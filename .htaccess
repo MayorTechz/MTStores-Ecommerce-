@@ -1,0 +1,43 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteRule ^$ public/ [L]
+  RewriteRule (.*) public/$1 [L]
+
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Referrer-Policy "same-origin"
+    
+#Header set Content-Security-Policy "default-src 'self' https:;"
+#font-src https: data:; img-src https: data:; script-src https:; style-src https:;"
+
+#Header set Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css  https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css kit.fontawesome.com use.fontawesome.com *.fontawesome.com; object-src 'none'"
+
+
+</IfModule>
+
+Options -Indexes
+
+Header always set X-Frame-Options "SAMEORIGIN"
+  
+
+php_value session.cookie_httponly 1
+
+php_value session.cookie_secure 1
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L,E=HTTPS:1]
+
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+
+
+# HTID:19886385: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:19886385:
+
+# HTID:19899596: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+Redirect 302 /administration/jj https://mtstorez.000webhostapp.com/administration/go
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:19899596:
