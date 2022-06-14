@@ -133,7 +133,7 @@ $(document).ready(function() {
 	} // func display_msg()
 	//stripe payment
 	function stripe_pay(amount, auth, currency, email, phone, reference) {
-		const pk = 'pk_test_51L6dsXIpord8yPxo0JgOO1uyhgLttcCnCwYp7aHlFhKgJIXBJbrCtQXiiPIbbfXFKC9OtmRjLrB3O34FUOYN8gcX00dV2zu9bF';
+		const pk = 'your stripe private key';
 		const stripe = Stripe(pk);
 		$.ajax({
 			url: "../../../../stripe/pay",
