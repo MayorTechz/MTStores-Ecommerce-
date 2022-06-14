@@ -13,6 +13,8 @@ $status="";
 
 $html ="";
 
+$html2="color:white; display:none;";//hide profile and logout button on page load
+
 if(isset($_SESSION['user'])){
     
  $status ="online";  
@@ -21,14 +23,12 @@ if(isset($_SESSION['user'])){
  //to hide login and register button if user is online
  $html = " style='display:none;' ";
  
+ $html2 ="color:white;";//display profile and logout button.
+ 
  
 }
 
-else{
-   
-    
-    $html="";
-}
+
 
 
 $res = $data['res'];//results data
@@ -37,8 +37,8 @@ $res = $data['res'];//results data
 
  //rating html
  $star ="<span class='fa fa-star'></span>";
- $no_star ="<span class='fa fa-star-o'></span>";
- $half_star ="<span class='fa fa-star-half-o'></span>";
+ $no_star ="<span style='color:grey;' class='fa fa-star'></span>";
+ $half_star ="<span class='fa fa-star-half'></span>";
  
  $zero_star = str_repeat($no_star,"5");
  
@@ -47,7 +47,8 @@ $res = $data['res'];//results data
  $one = $star."".str_repeat($no_star,"4");
  
  $one_half = $one. $half_star."".str_repeat($no_star,"3");
- $two = str_repeat($star,"2");
+ $two = str_repeat($star,"2").str_repeat($no_star,"3");
+ 
  $two_half=str_repeat($star,"2").$half_star.str_repeat($no_star,"2");
  $three =  str_repeat($star,"3").str_repeat($no_star,"2");
  $three_half= str_repeat($star,"3").$half_star.str_repeat($no_star,"1");
@@ -131,7 +132,7 @@ if(isset($_SESSION['stripe']) && $_SESSION ['stripe'] == 'completed'){
   <!--Sweet alert-->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" integrity="sha384-Dw2+3qpObGzez20CmU3AMW9GY+Cin5hHaVmupE+SaONsNUANucjrAJ8gLpjHMLXh" crossorigin="anonymous">
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js" integrity="sha384-C9puUm0DsqtZ97l3TI1CYnjClvjaRMP1XLmQZidqapc9iSQNpByN6RImM2XqbEGX" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js" integrity="sha384-C9puUm0DsqtZ97l3TI1CYnjClvjaRMP1XLmQZidqapc9iSQNpByN6RImM2XqbEGX" crossorigin="anonymous" ></script>
 
   <!--font awesome icon-->
   
@@ -139,23 +140,27 @@ if(isset($_SESSION['stripe']) && $_SESSION ['stripe'] == 'completed'){
 
   
   <!--eruda-->
-<script src="//cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
+<!--<script src="//cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>-->
 
 
 <!--jquery cdn-->
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous" ></script>
 
 
  <!-- home js asset trigger--> 
-  <script src="store_module/js/hm.js"></script>
+  <script src="store_module/js/home.min.js"></script>
 
 
   
   <!--js cookies-->
-  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js" integrity="sha256-0H3Nuz3aug3afVbUlsu12Puxva3CP4EhJtPExqs54Vg=" crossorigin="anonymous"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js" integrity="sha256-0H3Nuz3aug3afVbUlsu12Puxva3CP4EhJtPExqs54Vg=" crossorigin="anonymous"></script>
   
-  
+ <!--lazy loader-->
+<!--<script src="yall.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", yall);
+</script>-->
 
   
   <!--custom css-->
@@ -170,16 +175,28 @@ body{
 font-family: 'Tiro Devanagari Marathi', serif;
 }
 
-.cart-btn{
-    
-font-family: 'Joan', serif;
-}
-</style>
 
+.nav-menu{
+    position:relative;
+    font-size:8px;
+    left:116px;
+    
+}
+
+#f,.f{
+    
+    object-fit:contain;
+}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
 </head>
 
-<body  class="has-navbar-fixed-top has-navbar-fixed-bottom bg">
+<body class="has-navbar-fixed-top has-navbar-fixed-bottom bg">
+ 
+ 
     
+  
     <input type="text" id = "category-auth" value="<?= $data['category_auth']; ?>" hidden>
     
 <?php
@@ -218,34 +235,34 @@ if(isset($_SESSION['response'])){
 <input id="form_token" type="text" value="<?=$_SESSION['form_token'];?>" hidden>
     
     
-<script src="https://checkout.stripe.com/checkout.jss"></script>
 
 <!-- paystack -->
-<script src="https://js.paystack.co/v1/inline.js"></script>   
+<script  src="https://js.paystack.co/v1/inline.js"></script>   
     
-<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script type="module" src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
     <script src="https://js.stripe.com/v3/"></script>
   
-  <div style="
+  
+ <div style="
   <?php 
   //hiding of preloader
  if(isset($css)){
  echo $css;
  }unset($_SESSION['stripe']);?>">
       
-      
- <div style="" id="preloader">
-<div id="loader"></div>
-<span style="position:fixed; color:white; top:50%; left:30%;" class="mt-3 title is-3">MTStores <i class="ml-1 fa fa-shopping-cart"></i></span>
-
- </div>
  
-<div id="preloader2">
-     
-<div id="loader"></div>
-<span style="position:fixed; color:white; top:50%; left:30%;" class="mt-3 title is-3">MTStores <i class="ml-1 fa fa-shopping-cart"></i></span>
+      
+ <div style="z-index:9999;" id="preloader">
+ <div id="loader"></div>
+<span style="position:fixed; color:white; top:58%; left:32%;" class=" title is-3">MTStores <i class="ml-1 fa fa-shopping-cart"></i></span>
+</div>
 
- </div>
+
+ 
+<div style='visibility: hidden;' id="preloader2">
+    <div id="loader"></div>
+<span style="position:fixed; color:white; top:58%; left:32%;" class="mt-3 title is-3">MTStores <i class="ml-1 fa fa-shopping-cart"></i></span>
+</div>
  
  </div>
    
@@ -254,14 +271,15 @@ if(isset($_SESSION['response'])){
     
     <input id="online-status" type="text" value="<?=$status;?>" hidden>
     
-    
+  
   
   <!--Home Fixed navbar  -->
   
-  <nav  style="height:12%; border:0px;" class="navTop navbar is-fixed-top baseColor">
+  <nav style="height:13%;" class="navTop navbar is-fixed-top baseColor white">
       
+<div class="mt-3"></div>
+   
   <div class="navbar-brand">
-      
       
       <!--store logo-->
     <a class="navbar-item" href=" ">
@@ -269,7 +287,7 @@ if(isset($_SESSION['response'])){
       <img src="../../../public/logo/mts.png" alt="Logo" width="" height="">
         
        
-    </a>
+    </a> 
    
   <!-- search bar-->
   <div class="control has-icons-left mt-3"> 
@@ -292,7 +310,7 @@ if(isset($_SESSION['response'])){
     </span>
     
     
-  </div>
+  </div><!--navbar brand-->
   
  <!--Store info--> 
   <div  class="container is-fluid">
@@ -330,55 +348,10 @@ if(isset($_SESSION['response'])){
   <span class="mr-1 fa fa-mobile"></span> Phone/Tablet  
       </a> 
       
-          <a class="navbar-item menus" id="children">
+      <a class="navbar-item menus" id="children">
   <span class="mr-1 fa fa-child"></span> Children  
       </a>  
     
-     
-  <!-- currency-->
-  <div id="change_currency" class="column currency">
-       <p>Change Currency</p>
-  <input id="active-currency" type="text" value="<?=$_SESSION['currency'];?>" hidden> 
-  
- <div id="naira" class=" button is-dark is-light is-outlined ml-3 is-small">&#x20A6;</div>    
-    
-    
-    <div id="dollar" class="button is-dark is-light is-outlined ml-3 is-small">$</div>   
-     <div id="pounds" class=" button is-dark is-light is-outlined ml-3 is-small">£</div>  
-    
-  </div>
-
-    </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="field is-grouped">
-                        <div class="field">
-     <button <?=$html?> id="nav-login" class="button is-link is-small is-rounded mr-2">Login</button>       </div>
-     
- <div class="field">
-     <button <?=$html?> id="nav-reg" class="button baseColor is-small  is-rounded ml-3 white">Register <span class="fa fa-address-book ml-2"></span>
-     </button>
-     </div>  
-     
-            <div class="field">
-     <button id="nav-logout" class="button is-danger is-small is-rounded ">Logout</button>       </div>
-     
-       <div class="field">
-           <a href="../../../user/profile">
-     <button id="nav-profile" class="button baseColor is-small  is-rounded ml-3 white">My Profile <span class="fa fa-user ml-2"></span>
-     </button></a>
-     </div>  
-     
-    
-     
-     
-     
-     
-  </div>
-             </div>
-      
-  </div>
 </nav>
   <!-- end of navigation -->
   
@@ -386,11 +359,13 @@ if(isset($_SESSION['response'])){
   
   <!--Search modal -->
   <div style="" id="search-modal" class="modal">
+      
     <input name="form_auth" id="search_auth" type="text" value="<?php echo $_SESSION['auth']; ?>" hidden> 
     
   <div class="modal-background"></div>
   
   <div class="modal-card">
+      
     <header class="modal-card-head">
       <p  class="tag modal-card-title baseColor white is-small">Search Results!!!</p>
       <button id="search-close" class="button is-danger delete" aria-label="close"></button>
@@ -419,60 +394,68 @@ if(isset($_SESSION['response'])){
     </section>
 </div>
 </div>
-</div>
+
 
 
 <!-- end of search modal-->
   
-  
-  
-  
-  
-  
  
-  <!--header -->
-  <div style="display:none;" class="mt-5">
-  <section class="">
-      
- <div class="container is-fluid mt-5"> 
-  <div class="columns mt-5">
-      
-    <!-- header image--> 
- <div class="column is-half is-half-desktop is-half-tablet ">
-      <div class="box is-light is-link">
-      <figure class="image is-2by1">
-  <img class="" id="headerImg" src="../../../public/img/i1.jpg"> 
-  </figure>
-  </div>
-  </div>   
- <div class="column is-half-desktop is-half-tablet mm">
-      <div class="box  is-link ">
-     <p class="baseColor white button is-small is-rounded">Welcome!!! </p>  
-      <span style="font-size:12;" class=""><br>
-      Please note that we wont collect an upfront from you for goods. All payments are done online and afterwards our representative will speak with you to confirm your order. <b> Happy Shopping...</b>
-
-  </div>
-  </div>   
-      
-    </div>  
-  </div>
-  </section>
-  </div>
-  
-<div class="container is-fluid block mt-5">
+<section class="mb-5 block">
     
- <p id="change-theme" class="button is-link is-light is-rounded mr-2 mt-5"> 
+</section>
+
+
+<!-- currency-->
+  <div style="mt-5 display:flex; flex-flow:row wrap;" id="change_currency" class="currency ml-3">
+       <p class='mt-5 block' style="color:lightblue;">Browse in</p>
+  <input id="active-currency" type="text" value="<?=$_SESSION['currency'];?>" hidden> 
+  
+ <div id="naira" class=" button is-link is-light is-outlined ml-3 is-small">&#x20A6;</div>    
+    
+    
+    <div id="dollar" class="button is-link is-light is-outlined ml-3 is-small">$</div>   
+     <div id="pounds" class=" button is-link is-light is-outlined ml-3 is-small">£</div> 
+     
+     
+     <span id="change-theme" class="tag is-link is-light is-rounded mb-2 ml-2"> 
  <input class="mr-2" type="checkbox">
+ 
  <span id="mode">Dark Mode</span>
+ 
  <span style="display: none;" id="t-loader" class="ml-3 button is-loading is-link is-small"></span>
  
- </p>
+ </span>
  
+ 
+  </div>
 
-
-
-</div> 
+    <p class="nav-menu mt-2 tag">
+   
+<span <?=$html?> id="nav-login" class="tag is-link is-light is-small mr-2">Login</span>      
+     
+    
+     
   
+     <span <?=$html?> id="nav-reg" class="tag is-link is-small is-light mr-2 ml-2">Register
+     </span>
+     
+     
+ <span style='<?=$html2;?>' id="nav-profile" class="tag is-link is-small mr-2"><a class="white" href="../../../user/profile">Profile</a>
+     </span>
+    
+     
+ <span style="<?=$html2;?>" id="nav-logout" class=" tag is-danger is-small mr-1">Logout</span>     
+  
+   </p>
+   
+    
+ <!--featured products-->
+ 
+<?= $data['featured'];?>
+    
+    
+    
+    
 
  <?php 
 
@@ -543,49 +526,65 @@ if(!isset($counter)){
  
 echo'  
 
-  <section class="block box">
+<section class="block box">
+
 <div class="mt-4">
-   <div id="flash" class ="notification  is-light">
+
+   <div id="flash" class ="notificationn box  is-light">
        <p style="display:none;" class="button ism-light" id="loading">Loading...</p>
 
 <div class="columns">
+
+
 <div class="column is-half">
         <p style="border-radius:12px 34px" class="button is-danger">Flash Sales!!!</p>
         
             <span class="tag is-light is-outlined" id="productName">'.$p.'</span>    
         </div>
         
+        
+     <!--column 2-->
+     
         <div style="font-weight:bold; font-size:19px;" class="notification is-info is-light " class="column is-half ml-6 timer">
         
   <span class="clk tag is-link is-light">
+  
     <span style="display:none;" class="z">0</span>
   
+  
   <h3 id="d">0</h3>D </span>
+  
+  </span>
                
-  <span class=" tag is-link is-light"> 
+               
+  <span class="tag is-link is-light"> 
+  
     <span style="display:none;" class="z2">0</span>
   
-  <h3 id="h">0</h3>H </span>
+  <h3 id="h">0</h3>H </span> </span>
         
   <span class=" tag is-link is-light"> 
   
+  
     <span style="display:none;" class="z3">0</span>
-  <h3 id="m">0</h3>M </span> 
+  <h3 id="m">0</h3>M </span> </span>
   
     <span class=" tag is-link is-light">
+    
     <span style="display:none;" class="z4">0</span>
+    
     <h3 id="s">0</h3>
-    S </span>
+    S </span> </span>
   
         
-        </div>
+        </div>   <!--column2 end-->
         
         
-        </div>
+        </div> <!-- columns-->
 
-   <figure class="image is-3by2">
+   <figure class="image is-5by2">
 
-   <img class="image" src="../../../../public/products/'.$pic.'">
+   <img  class="image" src="../../../../public/products/'.$pic.'">
   
        
  <input type="text" id="pid" value="'.$pid.'" hidden>
@@ -596,8 +595,9 @@ echo'
 
    
  <input id="flash-timer" type="text" value="'.$counter.'" hidden>
- </div> 
  
+
+ </div>   <!--notification container-->
  
     <div id ="flashcart" class="button baseColor white is-small mt-3">Add to cart</div>
     
@@ -605,13 +605,13 @@ echo'
     
     
      
-    <div id="flash-amount2" style="display: none;" class="button is-link is-light">'.$curr2.number_format($price2).'</div>
+    <div id="flash-amount2" style="display:nonee;" class="button is-link is-light">'.$curr2.number_format($price2).'</div>
     
     
         
-    <div id="flash-amount3"  style="display: none;"  class="button is-link is-light">'.$curr3.number_format($price3).'</div>
+    <div id="flash-amount3"  style="display: nonee;"  class="button is-link is-light">'.$curr3.number_format($price3).'</div>
     
-</div>
+</div>     <!-- margin -->
  
   </section>
     
@@ -619,26 +619,15 @@ echo'
 }
 
 }//isset data['flash']
+
 ?>
 
       
-
  
-
-
-<!--products-->
-
-<section>
-<div class="container is-fluid">
-    
   
-  <div style='text-align:center;' class="notification is-link is-light mr-1 notice">
-   <span class='fa fa-bell-o'></span> 
-   Click on the product to view more information about it..
-      
-  </div>
+
   
- <div id="cache">
+ <div class="container is-fluid" id="cache">
   
  <div class="tag is-link block" id="category">Category/All</div>
   
@@ -749,9 +738,9 @@ $r =$zero;
  echo" <div class='column is-half-mobile is-one-quarter-desktop is-one-third-tablet'>
    <div  class='box mb-2'>
       <div id='get_details'>
-   <div style='font-size:9px; font-weight:bold; text-align:center; border-radius:50%;' class='button is-success is-light'><span style='display:none;' id='$id' class='fa fa-check'></span> </div>
+  <!-- <div style='font-size:9px; font-weight:bold; text-align:center; border-radius:50%;' class='button is-success is-light'><span style='display:none;' id='$id' class='fa fa-check'></span> </div>-->
 
- <p style='font-size:10px; font-weight:bold; text-transform:uppercase;' id='productName' class='block '>$product</p> 
+ <p style='font-size:8px; font-weight:bold; text-transform:uppercase;' id='productName' class='b'>$product</p> 
  
  <input id='pid' type='text' value='".$product_id." ' hidden>
  
@@ -759,11 +748,14 @@ $r =$zero;
     Loading...
    <span class='button is-loading is-small is-outlined is-link'> </span> </p> 
    
-   <figure class='image centerPix'>
+   <figure class='image centerPix '>
        
-   <img class='image is-64x64 ' src='../../../public/products/".$pic."'>   
+   <img data-src='../../../public/img/blur.jpeg'  id='f' class='image is-64x64 lazy' src='../../../public/products/".$pic."'>   
   
    </figure>  
+   
+  
+
    
   <!--price-->
 <div id='price' class='price  mt-2'>
@@ -813,8 +805,7 @@ $r =$zero;
 ".$r."
 
  <!--cart button-->
-  <span id='cartbtn' class='button is-small baseColor white'>Add to cart  
-      </span>
+  <span id='cartbtn' class='button  is-small baseColor white fa fa-plus'></span>
 </div> <!--rating-->
 
 <!--  quantity
@@ -1162,8 +1153,8 @@ $r =$zero;
   
  <div class="columns is-mobile">
  <div id="pic2" class="column is-one-half-mobile notification is-light is-link mr-2">
-   <figure class="image  is-128x128">
-   <img  class="image" id="p2" src="../../../public/products/p4.pngg">
+   <figure class="image">
+   <img  class="image is-64x64" id="p2" src="../../../public/products/p4.pngg">
      
  </figure>    
      
@@ -1171,8 +1162,8 @@ $r =$zero;
  </div>    
      <!--pic 3-->
  <div id="pic3" class="column is-one-half-mobile notification is-light is-link">
-   <figure class="image is-128x128">
-   <img  class="image" id="p3" src="../../../public/products/p6.png">
+   <figure class="image">
+   <img  class="image is-64x64" id="p3" src="../../../public/products/p6.png">
      
  </figure>    
      
@@ -1215,7 +1206,7 @@ $r =$zero;
 </div> <!--container-->
 </section>
 
-
+<hr>
 <div class="block ml-2">
 <p class="page">Page</p>
 
@@ -1258,8 +1249,7 @@ $r =$zero;
        <div style="display:flex; flex-flow:row wrap;" class="container is-fluid">
     
     
-     
-
+   
 <!-- bottom nav item 1 -->
   
   <p id="check_items" class="navbar-item white">
@@ -1288,8 +1278,6 @@ if(isset($_SESSION['user'])){ echo' '.$_SESSION['login_status'];}  ?> " id="onli
     
 
 
-
-
     </div>
     </nav>
 
@@ -1316,7 +1304,7 @@ if(isset($_SESSION['user'])){ echo' '.$_SESSION['login_status'];}  ?> " id="onli
       
 </div>
 
-
+</div>
 
 </body>
 </html>
