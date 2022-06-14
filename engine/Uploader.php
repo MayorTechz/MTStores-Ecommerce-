@@ -19,7 +19,7 @@ class Uploader
         $this->data = []; //array to get each filename of what is uploaded
     }
 
-    function upload($max_size, $allowed, $upload_folder)
+    function upload($max_size, $allowed, $upload_folder,$name="")
     {
         $this->max_size = $max_size;
 
@@ -34,9 +34,11 @@ class Uploader
                 exit("All pictures must be selected!!");
             }
 
+
+
             //filesize check
             if (filesize($file["tmp_name"]) > $this->max_size) {
-                exit("All pictures size must not be greater then 5MB!!");
+                exit("Picture size is larger than expected");
             }
 
             //file type check
@@ -58,7 +60,7 @@ class Uploader
             //try upload
 
             $this->filename =
-                "p_" . bin2hex(random_bytes(4)) . "." . $this->extension;
+                $name.bin2hex(random_bytes(6)) . "." . $this->extension;
 
             $temp = $file["tmp_name"];
 
