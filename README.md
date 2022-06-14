@@ -12,9 +12,12 @@ Features includes:
 </ul>
 <br>
 
-To install follow the readme.txt
+To install follow the installation.txt
 
 Demo at https://mtstorez.000webhostapp.com
+
+administration demo(Admin/Staff)
+https://mtstorez.000webhostapp.com/administration/go
 
 User  Login credentials :
 
