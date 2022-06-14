@@ -1,0 +1,21 @@
+Welcome!!! This are the steps invilved in setting up your store!!!
+
+
+1) Create a database on your server and note the credentials. i.e db name,db password,host etc.
+
+2)Open install folder(located in public folder in root directory), and import the mtstoresV1.sql file to your database.
+  
+ 3) Extract the MTStores.zip file into public_html/htdocs or any folder inside. 
+  
+  
+ 4) Note the link/path to the folder where you extracted the zip file. e.g if its in public_html/htdocs then directory will be "https://yoursite.com" or if its in a folder lets say "app", then path will be "https://yoursite.com/app" . If your site is not ssl enabled, just type in something like "http://yoursite.com/app" or "http://yoursite.com" without the column(" ")
+ 
+ 
+ 5) Enter into your address bar the path you noted in step 3 followed by '/public/install/welcome.php' i.e =>  https://yoursite.com/public/install/welcome.php (in my own case).
+  
+  6) Lastly,fill the form below with the necessary details and press install.
+  
+  7) After succesful installation, open a new tab and enter yoursite name, if the store loads up, then the setup is fine. Else, run the steps again. If your site is not SSL enabled, you may need to comment out line 31-35 in .htaccess located at the root folder.
+  
+  
+  
