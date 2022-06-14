@@ -4,25 +4,21 @@
 
 
 
-
 document.onreadystatechange = function() {
-  
-document.querySelector("#preloader").style.visibility="hidden";//hide preloader for light mode
 
-
-document.querySelector("#preloader2").style.visibility="hidden";//hide preloader for dark mode
-    
     
 	const mode = Cookies.get("theme");
-	
-   
 	
 	let t = "#preloader";
 	
 	//page not loaded completely
 	if(document.readyState !== "complete") {
 	    
-		document.querySelector("body").style.visibility = "hidden";
+document.querySelector("body").style.visibility = "hidden";
+		
+		
+	document.querySelector('#preloader').style.zIndex="9999";
+		
 		if(mode == "Dark Mode") { //dark mode is the users choice from cookie
 			t = "#preloader2"; //we are going to load preloader2
 			
@@ -32,7 +28,6 @@ document.querySelector("#preloader2").style.visibility="hidden";//hide preloader
 		} else { //light mode is users choice.
 			t = "#preloader"; //we are going to load preloader
 			
-//	document.querySelector("#preloader2").style.visibility="hidden";//hide preloader for dark mode
 			
 			
 			document.querySelector(t).style.visibility = "visible";
@@ -42,29 +37,43 @@ document.querySelector("#preloader2").style.visibility="hidden";//hide preloader
 			document.querySelector("#preloader").style.visibility = "hidden"; //hide preloader
 			document.querySelector("#preloader2").style.visibility = "hidden"; //hide preloader
 			document.querySelector("body").style.visibility = "visible";
-		}, 100);
+		}, 500);
 	} //else
 }; //state change
+
+
+
 $(document).ready(function() {
+    
+    
+    $("#preloader,#preloader2").css({"z-index":"-9999"}).hide();
+    
 	//load theme saved in cookie
 	const mode = Cookies.get("theme");
-	if(mode == "Dark Mode") { //then light mode is on.
+	if(mode == "Dark Mode") { //then dark mode is on.
 		$(".navTop").removeClass("baseColor");
 		$(".navTop,.baseColor").css({
 			"background-image": "linear-gradient(62deg,#232526,#414345)"
 		});
+		
+		$(".fp").removeClass("box");
+		$(".fpimg").removeClass("is-rounded");
 		$("body,.navTop,.link-btn").css({
-			"background-image": "linear-gradient(62deg,#232526,#414345"
+			"background-image": "linear-gradient(62deg,black,#232526,#414345"
 		});
+		
+		$(".fp").addClass(" box");
+			$(".fpimg").addClass("is-rounded");
+		
 		$("#mode").html("Light Mode");
 	}
 	//hides profile and logout button if no active user session   
 	let status = $("#online-status").val();
 	if(status !== "online") {
-		$("#nav-profile,#profile,#logout,#nav-logout").hide();
-		$("#online-info").html("Login to enable some features");
-		$("#online-info").addClass("tag is-warning block");
-	};
+		$("#nav-profile,#profile,#logout,#nav-logout").css({'display':'none'});
+		$("#online-info").html("Login to enable some features").addClass("tag is-warning block");
+	}
+	
 	(function() {
 		var src = '//cdn.jsdelivr.net/npm/eruda';
 		if(!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
@@ -204,8 +213,9 @@ $(document).ready(function() {
 			},
 			success: function(d) {
 				$("#category").html("Category/Electronics");
-				const pos = $("#products").offset().right;
+				const pos = $("#products").offset().bottom;
 				window.scroll(0, pos);
+				window.location.href='#products';
 				$("#products").html(d);
 			}
 		});
@@ -227,7 +237,8 @@ $(document).ready(function() {
 			success: function(d) {
 				const pos = $("#products").offset();
 				window.scroll(0, pos.right);
-				$("#category").scrollTop();
+				window.location.href='#products';	
+			
 				$("#category").html("Category/Men"); //category name.
 				$("#products").html(d);
 			}
@@ -250,7 +261,7 @@ $(document).ready(function() {
 			success: function(d) {
 				const pos = $("#products").offset();
 				window.scroll(0, pos.right);
-				$("#category").scrollTop();
+				window.location.href='#products';
 				$("#category").html("Category/Women"); //category name.
 				$("#products").html(d);
 			}
@@ -273,7 +284,7 @@ $(document).ready(function() {
 			success: function(d) {
 				const pos = $("#products").offset();
 				window.scroll(0, pos.right);
-				$("#category").scrollTop();
+					window.location.href='#products';
 				$("#category").html("Category/Children"); //category name.
 				$("#products").html(d);
 			}
@@ -296,7 +307,7 @@ $(document).ready(function() {
 			success: function(d) {
 				const pos = $("#products").offset();
 				window.scroll(0, pos.right);
-				$("#category").scrollTop();
+				window.location.href='#products';
 				$("#category").html("Category/Phone/Tablets"); //category name.
 				$("#products").html(d);
 			}
@@ -310,16 +321,19 @@ $(document).ready(function() {
 	//display only the product prices in default currency
 	const c = $("#active-currency").val();
 	if(c == "naira") {
-		$("#price2,#old_price2,#price3,#old_price3").css("display", "none");
+		$("#price2,#old_price2,#price3,#old_price3,#flash-amount2,#flash-amount3,#fp-amount2,#fp-amount3").css("display", "none");
 	}
 	if(c == "dollar") {
-		$("#price,#old_price,#price3,#old_price3").css("display", "none");
+	    
+		$("#price,#old_price,#price3,#old_price3,#flash-amount,#flash-amount3,#fp-amount,#fp-amount3").css("display", "none");
 	}
 	if(c == "pounds") {
-		$("#price,#old_price,#price2,#old_price2").css("display", "none");
+		$("#price,#old_price,#price2,#old_price2,#fp-amount,#fp-amount3,#flash-amount,#flash-anount3").css("display", "none");
 	}
 	/*Handles user change of choice of currency*/
-	$(".navbar #change_currency").on("click", "div", function() {
+$("#change_currency").on('click','div',function(){
+    
+
 		//cookies need to be cleared to avoid displaying cart table data which shows the items price in a currency which was choosen before.
 		if(typeof cookies !== "undefined") {
 			let cookies = document.cookie.split(";");
@@ -334,11 +348,13 @@ $(document).ready(function() {
 		}
 		let choice = $(this).attr('id'); //choice of currency
 		//change currency to dollar
+		
+	
 		if(choice == "dollar") {
-			$("#price, #old_price, #price3, #old_price3, #flash-amount, #flash-amount3").css("display", "none");
-			$("#price2,#old_price2,#flash-amount2").show();
+			$("#price, #old_price, #price3, #old_price3, #flash-amount, #flash-amount3,#fp-amount,#fp-amount3").css("display", "none");
+			$("#price2,#old_price2,#flash-amount2,#fp-amount2").show();
 			//close navbar menu after change
-			$(".navbar-menu,.navbar-burger").removeClass("is-active");
+			//$(".navbar-menu,.navbar-burger").removeClass("is-active");
 			//clear the present data in cart
 			$("tbody").empty();
 			$("#items").html("0");
@@ -346,10 +362,10 @@ $(document).ready(function() {
 			save_currency(choice);
 		}
 		if(choice == "pounds") {
-			$("#price,#old_price,#price2,#old_price2,#flash-amount,#flash-amount2").css("display", "none");
-			$("#price3,#old_price3,#flash-amount3").show();
+			$("#price,#old_price,#price2,#old_price2,#flash-amount,#flash-amount2,#fp-amount,#fp-amount2").css("display", "none");
+			$("#price3,#old_price3,#flash-amount3,#fp-amount3").show();
 			//close the navbar menu
-			$(".navbar-menu,.navbar-burger").removeClass("is-active");
+		//	$(".navbar-menu,.navbar-burger").removeClass("is-active");
 			$("tbody").empty(); //clear cart 
 			$("#items").html("0");
 			$("#total").html("-"); //total clear
@@ -357,8 +373,8 @@ $(document).ready(function() {
 		}
 		//naira choice
 		if(choice == "naira") {
-			$("#price2,#old_price2,#price3,#old_price3").css("display", "none");
-			$("#price,#old_price").show();
+			$("#price2,#old_price2,#price3,#old_price3,#flash-amount2,#flash-amount3,#fp-amount2,#fp-amount3").css("display", "none");
+			$("#price,#old_price,#flash-amount,#fp-amount").show();
 			//close the navbar menu
 			$(".navbar-menu,.navbar-burger").removeClass("is-active");
 			$("tbody").empty(); //clear cart
@@ -372,8 +388,9 @@ $(document).ready(function() {
 		$(this).closest(".modal").removeClass("is-active");
 	});
 	/*Handles the checking of more details about a product*/
-	$("body").on('click', '#get_details,#flash', function() {
-		$("#pic1,#p2,#p3").attr("src", "loading..."); //loading alt to avoid displaying the last picture that was there
+	$("body").on('click', '#get_details,#flash,#fp',function(){
+	
+		$("#pic1,#p2,#p3").attr("alt", "loading..."); //loading alt to avoid displaying the last picture that was there
 		$(this).closest("div").find("#loading").show(); //show loading icon
 		//hide loading icon after 4s
 		$(this).closest("div").find("#loading").hide(4000);
@@ -391,6 +408,28 @@ $(document).ready(function() {
 				curr: current_currency
 			},
 			success: function(reply) {
+	let ele =	$('#info-modal img');
+	let no = ele.length;
+	
+	let totalImg = 0;
+
+	ele.on('load',function (e){
+	    totalImg++;
+	   
+	    if (totalImg == no){
+	        $("#info-modal").addClass("is-active");
+	    }
+	})
+	
+	
+	
+	
+		
+		
+			/* setTimeout(function (){
+			$("#info-modal").addClass("is-active");
+			 },3000);*/
+			    
 				$("#pic1").attr("src", "../../../../public/products/" + reply.pic1);
 				$("#p2").attr("src", "../../../../public/products/" + reply.pic2);
 				$("#p3").attr("src", "../../../../public/products/" + reply.pic3);
@@ -400,7 +439,7 @@ $(document).ready(function() {
 				$("#desc").html(reply.description);
 				$("#modal_price").html(curr + p);
 				$("#info-pid").val(pid);
-				$("#info-modal").addClass("is-active");
+			
 			}
 		}); //ajax end
 	}); //end product details.
@@ -784,8 +823,8 @@ $(document).ready(function() {
 					//hide reg modal
 					el.parents().find(".modal").removeClass("is-active");
 					$("#online-badge").addClass("button is-success online-badge");
-					$("#online-info, #nav-login,#nav-reg").hide();
-					$("#nav-profile,#nav-logout,#profile,#logout").show();
+					$("#online-info, #nav-login,#nav-reg").css({"display":"none"});
+					$("#nav-profile,#nav-logout,#profile,#logout").csd({"display":"block"});
 				}
 			}
 		});
@@ -823,7 +862,7 @@ $(document).ready(function() {
 					if(r.status !== "1") {
 						const pos = $("#error").offset();
 						window.scroll(0, pos.right);
-						$("#login-error").html("error: " + d.msg).css({
+						$("#login-error").html("error: " + r.msg).css({
 							"display": "block"
 						});
 					} else {
@@ -831,8 +870,8 @@ $(document).ready(function() {
 						$(".navbar-burger,.navbar-menu").removeClass("is-active");
 						$("#login").parents().find(".modal").removeClass("is-active").hide();
 						$("#online-badge").addClass("button is-success online-badge");
-						$("#online-info, #nav-login,#nav-reg").hide();
-						$("#nav-profile,#nav-logout,#profile,#logout").show();
+						$("#online-info, #nav-login,#nav-reg").css({"display":"none"});
+						$("#nav-profile,#nav-logout,#profile,#logout").css({"display":"block"});
 					}
 				}
 			}) //ajax to login  
@@ -974,8 +1013,8 @@ $(document).ready(function() {
 			success: function(r) {
 				if(r == "1") {
 					$("#online-badge").removeClass("button is-success online-badge");
-					$("#online-info, #nav-login,#nav-reg").show();
-					$("#nav-profile,#nav-logout,#profile,#logout").hide();
+					$("#online-info, #nav-login,#nav-reg").css({"display":"block"});
+					$("#nav-profile,#nav-logout,#profile,#logout").css({"display":"none"});
 					window.location.href = '';
 				}
 			}
@@ -983,11 +1022,13 @@ $(document).ready(function() {
 	}); //
 	/*Handles change of theme*/
 	$("body").on('click', '#change-theme', function() {
-		$("#t-loader").show();
+	//	$("#t-loader").show();
 		const mode_txt = $("#mode").html();
 		let new_mode = "";
-		if(mode_txt == "Dark Mode") { //then light mode is on.
+		if(mode_txt == "Dark Mode") { //then light mode is on. change to dark mode
 			$(".navTop").removeClass("baseColor");
+			$(".fp").addClass("box");
+			$(".fpimg").addClass("is-rounded");
 			$(".navTop,.baseColor").css({
 				"background-image": "linear-gradient(62deg,#232526,#414345)"
 			});
@@ -1005,9 +1046,14 @@ $(document).ready(function() {
 			$("#t-loader").hide(1200);
 		} else { //dark mode on change to default light mode
 			$("#t-loader").show();
+			
+				$(".fp").removeClass("box");
+			$(".fpimg").removeClass("is-rounded");
+			
 			$(".navTop,.baseColor,.link-btn").css({
 				"background-image": "radial-gradient( circle farthest-corner at 10% 20%,  rgba(37,145,251,0.98) 0.1%, rgba(0,7,128,1) 99.8% )"
 			});
+		
 			$("body").css({
 				"background-image": "linear-gradient(64deg,white,white"
 			});
@@ -1159,7 +1205,7 @@ $(document).ready(function() {
 							Swal.fire('Ooops!!!', 'Flash Product already in cart. Open cart and adjust to the quantity you want!!!', 'info');
 							return;
 						}
-						$("#basket_table tbody").append('<tr><td><button class="ml-1 button  is-danger is-small is-rounded is-outlined remProd">x</button></td><td>' + r.name + '</td><td>' + r.pid + '</td><td>' + r.price + '</td><td>' + r.qty + '</td> <td><div class="container white"><span id="minus" class="tag baseColor white fa fa-minus"></span><input type="number" class="input is-link is-small" id="qty" value="1"> <span id="plus" class="tag baseColor  fa fa-plus white"></span> </div></td></tr>');
+						$("#basket_table tbody").append('<tr><td><button class="ml-1 button  is-danger is-small is-rounded is-outlined remProd">x</button></td><td>' + r.name + '</td><td>' + r.pid + '</td><td>' + r.price + '</td><td>' + r.qty + '</td> <td><div class="container white"><span style="color:white;" id="minus" class="tag baseColor white fa fa-minus"></span><input type="number" class="input is-link is-small" id="qty" value="1"> <span style="color:white" id="plus" class="tag baseColor  fa fa-plus white"></span> </div></td></tr>');
 						$("#c").html("(" + r.icon + ")");
 						//display no. of items in shoppin bag
 						$("tbody tr").each(function() {
@@ -1183,4 +1229,114 @@ $(document).ready(function() {
 					} //success
 			}); //ajax
 		}) //add go cart on flash
+		
+		
+		
+	//handles addition of featured product to cart
+	$("body").on("click", "#fpcart", function() {
+			const el = $(this);
+			
+			el.addClass("is-loading");
+			
+			const pid = $(this).closest("div").find("#fppid").val();
+		
+			let sum = 0;
+		
+		const name = $(this).closest("div").find("#fproductName").html();
+		
+		const p = $(this).closest("div").find(".price");
+		
+		const p2 = $(this).closest('div').find(".price2");
+		
+		const p3 = $(this).closest('div').find(".price3");
+		
+	let price = [p,p2,p3];
+	
+	for (let j of price){
+	    
+	    if(j.is(":visible") === true){
+	        
+	       price = j.html();
+	    }
+	}
+	
+	
+		
+		let qty = 1;
+		
+		const icon = price.charAt(0);
+		
+		price = price.replace("₦","");
+		
+	//checking if product already in cart
+		let check = $("tbody td:contains(" + name + ")").html();
+		
+		//increase quantity of product if choosen before.
+		if(check == name) { //if product chosen before
+			//get quantity of product presently
+			let q = $("td:contains(" + name+ ")").closest("tr").find("td").eq(4).html();
+			q = Number(q); // q turned from string to number
+			quantity = Number(q + 1); //replace with new quantity
+			$("td:contains(" + name+ ")").closest("tr").find("td").eq(4).html(quantity);
+			//display no of items in cart
+			$("tbody tr").each(function() {
+				let a = $(this).find("td").eq(4).html(); //each quantity in table
+				a = Number(a);
+				sum += a;
+			});
+			$("#items").html(sum); //display no of items in cart
+			let total = 0; // initial sum of items in cart.
+			//get total amount of items selected
+			$("tbody tr").each(function() {
+			let item_price = $(this).closest("tr").find("td").eq(3).html();
+				let qty = $(this).closest("tr").find("td").eq(4).html();
+				item_price = Number(item_price.replace(",", "")); //price per unit
+				qty = Number(qty); //quantity
+				let unit_product_price = qty * item_price;
+				total += unit_product_price; //sum of all items in cart
+				$("#total").html(total.toLocaleString());
+			});
+			save_choice(sum);
+			//display_msg(el, id); //sucfesful pick notification
+			setTimeout(function (){
+			el.removeClass("is-loading white");
+			},1000);
+			return;
+		} //if
+		else {
+			//add product
+			$("tbody").append('<tr><td><button class="ml-1 button  is-danger is-small is-rounded is-outlined remProd">x</button></td><td>' + name+ '</td><td>' + pid + '</td><td>' + price + '</td><td>' + qty + '</td> <td><div class="container white"><span style="color:white;" id="minus" class="tag baseColor  fa fa-minus"></span><input type="number" class="input is-link is-small" id="qty" value="1"> <span style="color:white;" id="plus" class="tag baseColor  fa fa-plus  white"></span> </div></td></tr>');
+			$("#c").html("(" + icon + ")");
+			//display no. of items in shoppin bag
+			$("tbody tr").each(function() {
+				let b = $(this).find("td").eq(4).html(); //each quantity in table
+				b = Number(b);
+				sum += b;
+			});
+			$("#items").html(sum); //display no of items on shopping bag
+			let total = 0; // initial sum of items in cart.
+			//get total amount of items selected
+			$("tbody tr").each(function() {
+				let item_price = $(this).closest("tr").find("td").eq(3).html();
+				let qty = $(this).closest("tr").find("td").eq(4).html();
+				item_price = Number(item_price.replace(",", "")); //price per unit
+				qty = Number(qty); //quantity
+				let unit_product_price = qty * item_price;
+				total += unit_product_price; //sum of all items in cart
+				$("#total").html(total.toLocaleString());
+			});
+			save_choice(sum);
+setTimeout(function (){
+			el.removeClass("is-loading white");
+			},1000);
+		} //else 	
+		
+		
+				
+		}) //add featured products	
+
+		
+		
+		
+		
 }); //doc end
