@@ -2,7 +2,7 @@
 
 /*Developed By Abel Mayowa 2022*/
 
-/*This is the class that holds the logic behind all the functioons of the store home page. Each function in this class as its name implies, controls the features of the store home.*/
+/*This is the class that holds the logic behind all the functioons of the store home paghe store home.*/
 
 /*Some functions used here can be found inside engine folder under Functions.php You can modify to your requirement or even add yours.*/
 
@@ -14,7 +14,7 @@ class Store extends Trongate
 
     function home()
     {
-        
+       
 
         //set the default currency into session cookie on page load. This is to allow us remember the currency the user is browsing the site with
         if (!isset($_SESSION["currency"]) || $_SESSION["currency"] == "") {
@@ -52,7 +52,107 @@ class Store extends Trongate
         }
         
         
+        //get 2 random products as featured
+        
+        
+        $type = "normal";
+        $params = ["s",[$type]];
+        
+     $featured= $this->CustomDB->select(
+            "products",
+            "WHERE type=? ORDER BY RAND() LIMIT 4",
+            $params
+        );
+        
+        
 
+        if ($featured->num_rows >= 1) {
+            
+ $h ='
+ 
+<section class="section mt-3">
+ 
+<div style="flex-flow:row wrap;" id="featured" class="columns is-mobile">'; 
+
+while($row = $featured->fetch_assoc()){
+   
+  //$row = $featured->fetch_assoc();
+  
+ $p = $row['productName'];
+ 
+ $pid = $row['pid'];
+ 
+ $pic = $row['pic1'];
+ 
+ $time="";
+ 
+ $c = $_SESSION['currency'];
+
+     
+ $price = $row['nairaPrice'];
+$curr = "₦";
+ 
+ $price2 = $row['dollarPrice'];
+ 
+ 
+     $curr2 = "$";
+
+ 
+     $price3 = $row['poundsPrice'];
+     
+     $curr3 = "£";     
+            
+            
+
+     $h.='
+  
+   
+ <div class="column is-half">
+<div id="fp" class="fp">
+
+<p style="border-radius:12px 34px; font-size:10px;" class="button is-link">Featured</p>
+        
+        
+       
+  <span class="tag is-light is-outlined" id="fproductName">'.$p.'</span>    
+  
+<span id="fp-amount" style=" " class="tag is-primary is-light price">'.$curr.number_format($price).'</span>
+
+
+<span id="fp-amount2" style="display:nonee;" class="tag is-primary is-light price2">'.$curr2.number_format($price2).'</span>
+
+<span id="fp-amount3" style="display:nonee;" class="tag is-primary is-light price3">'.$curr3.number_format($price3).'</span>
+  
+ <p style="display:none;" class="button is-light" id="loading">Loading...</p>
+
+   <figure class="image is-square">
+
+   <img id="f"  class="fpimg image is-roundedd" src="../../../../public/products/'.$pic.'">
+  
+       
+ <input type="text" id="fppid" value="'.$pid.'" hidden>
+      
+   </figure>
+   
+  </div>
+  
+    <span style="color:white;" id ="fpcart" class="button baseColor white is-small mt-3 is-light"><i class="fa fa-plus"></i></span>
+    
+    
+    
+    
+    </div>';
+    
+}//while
+
+$h.='</div>
+</section>';
+ 
+         
+        }//num rows
+        
+       
+ $data['featured'] = $h;
          $_SESSION['category_auth']  = bin2hex(random_bytes(30));
          
          $data['category_auth'] = $_SESSION['category_auth'];
@@ -1001,7 +1101,7 @@ class Store extends Trongate
    
    <figure class='image centerPix'>
        
-   <img class='image is-64x64 ' src='../../../public/products/" .
+   <img class='f image is-64x64 ' src='../../../public/products/" .
                     $pic .
                     "'>   
   
@@ -1104,7 +1204,7 @@ class Store extends Trongate
    
    <figure class='image centerPix'>
        
-   <img class='image is-64x64 ' src='../../../public/products/" .
+   <img class='f image is-64x64 ' src='../../../public/products/" .
                     $pic .
                     "'>   
   
@@ -1208,7 +1308,7 @@ class Store extends Trongate
    
    <figure class='image centerPix'>
        
-   <img class='image is-64x64 ' src='../../../public/products/" .
+   <img class='f image is-64x64 ' src='../../../public/products/" .
                     $pic .
                     "'>   
   
