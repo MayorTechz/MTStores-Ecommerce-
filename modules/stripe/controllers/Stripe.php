@@ -9,13 +9,13 @@ class Stripe extends Trongate
         //secrete key
         define(
             "SK",
-            "sk_test_51L6dsXIpord8yPxojSIckqL6Z5ht9I1bj73ISOqUSGjkzzknDNb7T3KUOWDXltHJWu11gC9PfTj0TPnNgtCeHWgg00L5N9QGs3"
+           "Your stripe secret key"
         );
 
         //public key
         define(
             "PK",
-            "pk_test_51L6dsXIpord8yPxo0JgOO1uyhgLttcCnCwYp7aHlFhKgJIXBJbrCtQXiiPIbbfXFKC9OtmRjLrB3O34FUOYN8gcX00dV2zu9bF"
+            "Your stripe public key"
         );
 
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
